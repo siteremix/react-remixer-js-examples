@@ -48,3 +48,7 @@ html {
   border: transparent;
   border-radius: 4px;
 }
+
+.poopy {
+  opacity: 0;
+}

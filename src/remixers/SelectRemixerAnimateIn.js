@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Remixer from "@siteremix/remixer";
+import useRemixer from "../hooks/useRemixer";
 import PlayButton from "../components/PlayButton";
 import MrPoopy from "../images/mr-poopy-butthole.png";
 
@@ -19,13 +19,30 @@ const options = [
 
 const Remix = () => {
   const [selected, setSelected] = useState(options[0]);
+  const [remixRef, remix, remixReset] = useRemixer();
 
   const runRemixer = useCallback(() => {
-    new Remixer("#mr-poopy")
-      .animateIn(selected, { duration: 1 })
+    if (!remix) {
+      return;
+    }
+    const runUpdate = async () => {
+      await remixReset();
+      remix
+        .animateIn(selected, { duration: 1 })
+        .animateOut(selected, { duration: 1 })
+        .run();
+    };
+
+    runUpdate();
+  }, [remix, selected, remixReset]);
+
+  useEffect(() => {
+    remix
+      ?.animateIn(selected, { duration: 1 })
       .animateOut(selected, { duration: 1 })
       .run();
-  }, [selected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remix]);
 
   useEffect(() => {
     runRemixer();
@@ -48,7 +65,7 @@ const Remix = () => {
             ))}
           </select>
         </div>
-        <div id="mr-poopy">
+        <div ref={remixRef} className="poopy">
           <img width="170px" src={MrPoopy} alt="poopy" />
         </div>
       </div>

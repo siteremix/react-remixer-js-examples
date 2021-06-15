@@ -63,7 +63,8 @@ const App = () => {
       </div>
       <div className="cards-row">
         <SimpleRemixerAnimation />
-        <SelectRemixerAnimate />
+        <SelectRemixerAnimate name="animate1" option="flipY" />
+        <SelectRemixerAnimate name="animate2" />
         <SelectRemixerAnimateIn />
         <SimpleRemixerAnimationDisableAndEnable />
       </div>
