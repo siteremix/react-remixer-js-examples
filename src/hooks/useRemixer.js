@@ -11,10 +11,17 @@ const useRemixer = (opt = {}) => {
   const createRemix = useCallback(() => {
     const element = refElement.current;
     if (!remix) {
-      const r =
-        Object.keys(options).length > 0
-          ? Remixer.fromJs(options)
-          : new Remixer(element);
+      if (!options.remix) {
+        options.remix = {
+          selector: element,
+        };
+      } else {
+        options.remix.selector = options.remix?.selector
+          ? options.remix.selector
+          : element;
+      }
+      console.log("options", options);
+      const r = Remixer.fromJS(options);
       setRemix(r);
     }
   }, [refElement, remix, options]);
