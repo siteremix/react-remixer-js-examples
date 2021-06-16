@@ -6,17 +6,19 @@ const Remix = () => {
   const [refParent, remix, remixUpdate] = useRemixer({
     remix: {
       selector: "h1",
+      delayEach: 0.3,
+      hideBefore: true,
     },
     steps: [
       {
-        type: "animate",
+        type: "animateIn",
         params: "scaleUp",
         options: { duration: "3s" },
       },
       {
         type: "animate",
         params: "tada",
-        options: { duration: "3s" },
+        options: { duration: "3s", showAfter: true },
       },
     ],
   });
@@ -26,8 +28,12 @@ const Remix = () => {
       return;
     }
 
+    await remix.changeSelector({ selector: refParent.current });
     remixUpdate({
-      remix: { selector: refParent.current },
+      remix: {
+        // hideBefore: false,
+        showBefore: true,
+      },
       steps: [
         {
           type: "animate",
@@ -42,6 +48,7 @@ const Remix = () => {
       ],
       run: {},
     });
+    console.log(remix);
   }, [remix, remixUpdate, refParent]);
 
   useEffect(() => {
