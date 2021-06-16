@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import useRemixer from "../hooks/useRemixer";
 import PlayButton from "../components/PlayButton";
 
 const Remix = () => {
-  const [refParent, remixH1] = useRemixer({
+  const [refParent, remix, remixUpdate] = useRemixer({
     remix: {
       selector: "h1",
     },
@@ -21,9 +21,32 @@ const Remix = () => {
     ],
   });
 
+  const runRemixer = useCallback(async () => {
+    if (!remix) {
+      return;
+    }
+
+    remixUpdate({
+      remix: { selector: refParent.current },
+      steps: [
+        {
+          type: "animate",
+          params: "tada",
+          options: { duration: "3s" },
+        },
+        {
+          type: "animate",
+          params: "scaleUp",
+          options: { duration: "3s" },
+        },
+      ],
+      run: {},
+    });
+  }, [remix, remixUpdate, refParent]);
+
   useEffect(() => {
-    remixH1?.run();
-  }, [remixH1]);
+    remix?.run();
+  }, [remix]);
 
   return (
     <div className="card row-column" key="animatation">
@@ -34,7 +57,7 @@ const Remix = () => {
       </div>
       <PlayButton
         onClick={() => {
-          remixH1.run();
+          runRemixer();
         }}
       />
     </div>

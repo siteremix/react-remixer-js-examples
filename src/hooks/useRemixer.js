@@ -20,14 +20,25 @@ const useRemixer = (opt = {}) => {
           ? options.remix.selector
           : element;
       }
-      console.log("options", options);
-      const r = Remixer.fromJS(options);
+      const r = new Remixer(options);
       setRemix(r);
     }
   }, [refElement, remix, options]);
 
-  const resetRemix = useCallback(
+  const resetUpdateRemix = useCallback(
     async (cb) => {
+      if (typeof cb === "object" && cb != null && remix) {
+        const element = refElement.current;
+        await remix.reset();
+        if (!cb.remix) {
+          cb.remix = {
+            selector: element,
+          };
+        } else {
+          cb.remix.selector = cb.remix?.selector ? cb.remix.selector : element;
+        }
+        return remix.fromJS(cb);
+      }
       if (remix) {
         await remix;
 
@@ -53,7 +64,7 @@ const useRemixer = (opt = {}) => {
     }
   }, [createRemix, refElement, remix]);
 
-  return [refElement, remix, resetRemix];
+  return [refElement, remix, resetUpdateRemix];
 };
 
 export default useRemixer;
