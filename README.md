@@ -1,6 +1,6 @@
 # React Remixer JS
 
-Project to test [Remixer JS](https://github.com/siteremix/RemixerJS) library utilities.
+Project to show of how to use [Remixer JS](https://github.com/siteremix/RemixerJS) with React components with useRemixer hook.
 
 Install dependences
 
