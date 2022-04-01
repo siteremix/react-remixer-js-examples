@@ -43,7 +43,7 @@ const Remix = () => {
   }, [disabled, blur, runRemixer]);
 
   return (
-    <div className="card row-column" key="animateEnableDisable">
+    <>
       <div>
         <div
           style={{
@@ -70,7 +70,7 @@ const Remix = () => {
         You can enable and disable the animation of this text!!
       </div>
       <PlayButton onClick={runRemixer} />
-    </div>
+    </>
   );
 };
 

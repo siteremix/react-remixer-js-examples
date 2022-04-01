@@ -17,10 +17,11 @@ const optionsDirect = [
     "scaleTo",
 ];
 
-const Remix = ({ initValue = 1 }) => {
+const Remix = ({ initValue = 0 }) => {
   const [value, setValue] = useState(initValue);
   const [selectedAnimate, setSelectedAnimate] = useState(optionsAnimate[0]);
   const [selectedDirect, setSelectedDirect] = useState(optionsDirect[0]);
+  const [showHelp, setShowHelp] = useState(false);
   const [remixRef, remix, remixReset] = useRemixer();
 
   const runRemixer = useCallback(() => {
@@ -45,8 +46,24 @@ const Remix = ({ initValue = 1 }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remix]);
 
+  function handleChangeValue(e) {
+    const v = +e.target.value;
+    if (!isNaN(v)) {
+      if(
+        (selectedAnimate === 'scaleUp' || selectedAnimate === 'scaleDown')
+        && selectedDirect === 'scaleFrom'
+        && v === 1
+      ){
+        setValue(1.1);
+        setShowHelp(true);
+      } else {
+        setValue(v);
+      }
+    }
+  }
+
   return (
-    <div className="card row-column" key="animate">
+    <>
       <div>
         <div className="select-row">
           <div
@@ -58,6 +75,7 @@ const Remix = ({ initValue = 1 }) => {
             }}
           >
             <select
+              style={{ width: 100 }}
               name="items"
               id="items"
               value={selectedAnimate}
@@ -90,20 +108,38 @@ const Remix = ({ initValue = 1 }) => {
               style={{ marginLeft: 7 }}
             >
               <input
-                style={{ width: 20  }}
+                style={{ width: 60  }}
+                type="number"
                 className="input"
                 value={value}
-                onChange={(e) => setValue(+e.target.value)}
+                onChange={handleChangeValue}
               />
+              {showHelp && (
+                <div style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  maxWidth: 200,
+                  color: '#f92323',
+                  backgroundColor: '#ffffff',
+                }}>
+                  <button
+                    onClick={() => setShowHelp(false)}
+                    style={{ position: 'absolute', right: 10, top: 5 }}
+                  >
+                    X
+                  </button>
+                  <p>Для выбранных параметров значение не может быть равно '1'</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
-          <div id="pickle-rick3" ref={remixRef}>
-            <img width="170px" src={PickleRick} alt="pickle" />
-          </div>
+        <div id="pickle-rick3" ref={remixRef}>
+          <img width="170px" src={PickleRick} alt="pickle" />
+        </div>
       </div>
       <PlayButton onClick={runRemixer} />
-    </div>
+    </>
   );
 };
 

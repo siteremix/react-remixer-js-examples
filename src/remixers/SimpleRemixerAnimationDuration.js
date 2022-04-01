@@ -15,7 +15,7 @@ const Remix = ({ initDuration = 1 }) => {
     }
     const runUpdate = async () => {
       await remixReset();
-      remix.animate('rotate', { duration }).run();
+      remix.animate('rotate', { duration: duration + 's' }).run();
     };
 
     runUpdate();
@@ -26,12 +26,19 @@ const Remix = ({ initDuration = 1 }) => {
   }, [duration, runRemixer]);
 
   useEffect(() => {
-    remix?.animate('rotate', { duration }).run();
+    remix?.animate('rotate', { duration: duration + 's' }).run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remix]);
 
+  function handleChangeDuration(e) {
+    const value = +e.target.value;
+    if (!isNaN(value) && value > 0) {
+      setDuration(value);
+    }
+  }
+
   return (
-    <div className="card row-column" key="animate">
+    <>
       <div>
         <div className="select-row">
           <div
@@ -44,10 +51,13 @@ const Remix = ({ initDuration = 1 }) => {
           >
             <div>
               <input
-                style={{ width: 20  }}
+                style={{ width: 60  }}
+                min={1}
+                step="1"
+                type="number"
                 className="input"
                 value={duration}
-                onChange={(e) => setDuration(+e.target.value)}
+                onChange={handleChangeDuration}
               />
               {' '}
               <label>Duration</label>
@@ -59,7 +69,7 @@ const Remix = ({ initDuration = 1 }) => {
           </div>
       </div>
       <PlayButton onClick={runRemixer} />
-    </div>
+    </>
   );
 };
 

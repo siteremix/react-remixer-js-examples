@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Remixer from "@siteremix/remixer";
+import Card from './components/Card';
 import SimpleRemixerAnimation from "./remixers/SimpleRemixerAnimation";
 import SelectRemixerAnimate from "./remixers/SelectRemixerAnimate";
 import SelectRemixerAnimateIn from "./remixers/SelectRemixerAnimateIn";
@@ -12,7 +13,7 @@ const App = () => {
   const [hasBorder, setHasBorder] = useState(false);
   const [cardBackgroundColor, setCardBackgroundColor] = useState("#5a00a3");
 
-  useEffect(() => {
+  /*useEffect(() => {
     const remix = new Remixer(".card").styles({
       margin: "10px",
       padding: "10px",
@@ -33,7 +34,7 @@ const App = () => {
     }
 
     remix.run();
-  }, [hasBorder, cardBackgroundColor]);
+  }, [hasBorder, cardBackgroundColor]);*/
 
   const addBorderToCards = () => {
     setHasBorder(!hasBorder);
@@ -56,13 +57,27 @@ const App = () => {
         ></input>
       </div>
       <div className="cards-row">
-        <SimpleRemixerAnimation />
-        <SelectRemixerAnimate name="animate1" option="flipY" />
-        <SelectRemixerAnimate name="animate2" />
-        <SelectRemixerAnimateIn />
-        <SimpleRemixerAnimationDisableAndEnable />
-        <SimpleRemixerAnimationDuration />
-        <SimpleRemixerAnimationCustom />
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SimpleRemixerAnimation />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SelectRemixerAnimate name="animate1" option="flipY" />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SelectRemixerAnimate name="animate2" />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SelectRemixerAnimateIn />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SimpleRemixerAnimationDisableAndEnable />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SimpleRemixerAnimationDuration />
+        </Card>
+        <Card hasBorder={hasBorder} backgroundColor={cardBackgroundColor}>
+          <SimpleRemixerAnimationCustom />
+        </Card>
       </div>
     </div>
   );

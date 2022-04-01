@@ -56,7 +56,7 @@ const Remix = () => {
   }, [remix]);
 
   return (
-    <div className="card row-column" key="animatation">
+    <>
       <div ref={refParent}>
         <h1>Hello :)</h1>
         <h1>How are you ?</h1>
@@ -67,7 +67,7 @@ const Remix = () => {
           runRemixer();
         }}
       />
-    </div>
+    </>
   );
 };
 

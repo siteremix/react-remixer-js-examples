@@ -49,7 +49,7 @@ const Remix = () => {
   }, [selected, runRemixer]);
 
   return (
-    <div className="card row-column" key="animateIn">
+    <>
       <div>
         <div className="select-row">
           <select
@@ -70,7 +70,7 @@ const Remix = () => {
         </div>
       </div>
       <PlayButton onClick={runRemixer} />
-    </div>
+    </>
   );
 };
 
