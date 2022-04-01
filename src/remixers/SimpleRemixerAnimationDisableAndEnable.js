@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Remixer from "@siteremix/remixer";
 import PlayButton from "../components/PlayButton";
+import useRemixer from "../hooks/useRemixer";
 
 const CheckItem = ({ id, checkedItem, onChange, text }) => {
   return (
@@ -20,26 +20,24 @@ const CheckItem = ({ id, checkedItem, onChange, text }) => {
 const Remix = () => {
   const [disabled, setDisabled] = useState(false);
   const [blur, setBlur] = useState(false);
+  const [remixRef, remix, remixReset] = useRemixer();
 
   const runRemixer = useCallback(() => {
-    Remixer.fromJS({
-      remix: {
-        selector: "#my-text",
-      },
-      steps: [
-        {
-          type: "animate",
-          params: "scaleUp",
-          options: {
-            duration: "3s",
-            disabled,
-            useBlur: blur,
-          },
-        },
-      ],
-      run: {},
-    });
+    if (!remix) {
+      return;
+    }
+    const runUpdate = async () => {
+      await remixReset();
+      remix.animate('scaleUp', {
+        duration: "3s",
+        disabled,
+        useBlur: blur,
+      }).run();
+    }
+
+    runUpdate();
   }, [disabled, blur]);
+
   useEffect(() => {
     runRemixer();
   }, [disabled, blur, runRemixer]);
@@ -68,7 +66,7 @@ const Remix = () => {
         </div>
       </div>
 
-      <div id="my-text" style={{ fontSize: "20px", padding: "20px" }}>
+      <div id="my-text" ref={remixRef} style={{ fontSize: "20px", padding: "20px" }}>
         You can enable and disable the animation of this text!!
       </div>
       <PlayButton onClick={runRemixer} />
