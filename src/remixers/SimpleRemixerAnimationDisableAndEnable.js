@@ -36,7 +36,7 @@ const Remix = () => {
     }
 
     runUpdate();
-  }, [disabled, blur]);
+  }, [disabled, remix, blur, remixRef, remixReset]);
 
   useEffect(() => {
     runRemixer();

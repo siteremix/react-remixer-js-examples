@@ -38,7 +38,7 @@ const Remix = ({ initValue = 1 }) => {
 
   useEffect(() => {
     runRemixer();
-  }, [value, runRemixer, selectedAnimate, selectedDirect]);
+  }, [remix, runRemixer, value, selectedAnimate, selectedDirect]);
 
   useEffect(() => {
       remix?.animate(selectedAnimate, { [selectedDirect]: value }).run();
