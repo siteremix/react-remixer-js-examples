@@ -1,5 +1,5 @@
 html {
-  background-color: #282c34;
+  background-color: #220e20;
   color: #fff;
   text-align: center;
   font-family: Helvetica;
@@ -25,9 +25,9 @@ html {
   display: flex;
 }
 
-.select-dropdown {
+.select-dropdown, .input {
   padding: 4px 6px;
-  background-color: #3e4148;
+  background-color: #0a142c;
   border: transparent;
   border-radius: 2px;
   color: #bfc0c2;
